@@ -25,6 +25,9 @@ public class GameMap extends JFrame {
     private Component[][] fieldComponent;                                                                               // массив компонентов
     private int fieldSize;                                                                                              // размер поля
     private int winLength;                                                                                              // длина победы (количество в ряд)
+    private int mode;                                                                                              // длина победы (количество в ряд)
+    private char currentDot;                                                                                              // длина победы (количество в ряд)
+    private int currentUser = 1;                                                                                              // длина победы (количество в ряд)
 
     GameMap(MainWindow mainWindow) {
         this.mainWindow = mainWindow;
@@ -81,6 +84,7 @@ public class GameMap extends JFrame {
     void startNewGame(int mode, int fieldSize, int winLength) {
         this.fieldSize = fieldSize;
         this.winLength = winLength;
+        this.mode = mode;
         init();
         System.out.println("mode = " + mode +
                 "\n fieldSize = " + fieldSize +
@@ -127,34 +131,49 @@ public class GameMap extends JFrame {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            fieldJLabel[i][j].setText("" + GameMap.HUMAN_DOT);
-            field[i][j] = GameMap.HUMAN_DOT;
-            if (checkWin(HUMAN_DOT)) {
-                System.out.println("" +
-                        "Пользователь выиграл!");
-                mainWindow.setLbFieldWin("Пользователь выиграл!");
-                setVisible(false);
-                dispose();
-                return;
-            }
+            if (isEmptyCell(i, j)) {
+                if (mode == MODE_HVH) {
+                    if (currentDot == HUMAN_DOT) {
+                        currentDot = PC_DOT;
+                        currentUser = 2;
+                    } else {
+                        currentDot = HUMAN_DOT;
+                        currentUser = 1;
+                    }
+                } else {
+                    currentDot = HUMAN_DOT;
+                }
 
-            if (isFullField()) {
-                System.out.println("Ничья");
-                mainWindow.setLbFieldWin("Ничья!");
-                setVisible(false);
-                dispose();
-                return;
-            }
+                fieldJLabel[i][j].setText("" + currentDot);
+                field[i][j] = currentDot;
+                if (checkWin(currentDot)) {
+                    System.out.println("" +
+                            "Пользователь " + currentUser + " выиграл!");
+                    mainWindow.setLbFieldWin("Пользователь " + currentUser + " выиграл!");
+                    setVisible(false);
+                    dispose();
+                    return;
+                }
 
-            tryPC();
-            if (checkWin(PC_DOT)) {
-                System.out.println("" +
-                        "Компьютер выиграл!");
-                mainWindow.setLbFieldWin("Компьютер выиграл!");
-                setVisible(false);
-                dispose();
-            }
+                if (isFullField()) {
+                    System.out.println("Ничья");
+                    mainWindow.setLbFieldWin("Ничья!");
+                    setVisible(false);
+                    dispose();
+                    return;
+                }
 
+                if (mode == MODE_HVA) {
+                    tryPC();
+                    if (checkWin(PC_DOT)) {
+                        System.out.println("" +
+                                "Компьютер выиграл!");
+                        mainWindow.setLbFieldWin("Компьютер выиграл!");
+                        setVisible(false);
+                        dispose();
+                    }
+                }
+            }
         }
 
         @Override
