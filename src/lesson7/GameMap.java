@@ -2,6 +2,8 @@ package lesson7;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 public class GameMap extends JFrame {
     private static final int WINDOW_WIDTH = 350;
@@ -15,10 +17,11 @@ public class GameMap extends JFrame {
     private static final char EMPTY_DOT = '_';
 
     private MainWindow mainWindow;
-    private char[][] field;                                                                                      // само поле
-    private JLabel[][] fieldComponent;                                                                        // массив компонентов
-    private int fieldSize;                                                                                       // размер поля
-    private int winLength;                                                                                       // длина победы (количество в ряд)
+    private char[][] field;                                                                                             // само поле
+    private JLabel[][] fieldJLabel;                                                                                     // массив лейблов
+    private Component[][] fieldComponent;                                                                               // массив компонентов
+    private int fieldSize;                                                                                              // размер поля
+    private int winLength;                                                                                              // длина победы (количество в ряд)
 
     GameMap(MainWindow mainWindow) {
         this.mainWindow = mainWindow;
@@ -31,6 +34,41 @@ public class GameMap extends JFrame {
         setResizable(false);
         setTitle("Игровое окно");
         setBackground(Color.BLACK);
+        addWindowListener(new WindowListener() {
+
+            public void windowActivated(WindowEvent event) {
+
+            }
+
+            public void windowClosed(WindowEvent event) {
+                for (int i = 0; i < fieldSize; i++) {
+                    for (int j = 0; j < fieldSize; j++) {
+                        remove(fieldComponent[i][j]);
+                    }
+                }
+            }
+
+            public void windowClosing(WindowEvent event) {
+
+            }
+
+            public void windowDeactivated(WindowEvent event) {
+
+            }
+
+            public void windowDeiconified(WindowEvent event) {
+
+            }
+
+            public void windowIconified(WindowEvent event) {
+
+            }
+
+            public void windowOpened(WindowEvent event) {
+
+            }
+
+        });
     }
 
     public void setVisibleWindow(boolean visible) {
@@ -58,12 +96,13 @@ public class GameMap extends JFrame {
                 field[i][j] = EMPTY_DOT;
             }
         }
-        fieldComponent = new JLabel[fieldSize][fieldSize];
+        fieldJLabel = new JLabel[fieldSize][fieldSize];
+        fieldComponent = new Component[fieldSize][fieldSize];
         setLayout(new GridLayout(fieldSize, fieldSize));
         for (int i = 0; i < fieldSize; i++) {
             for (int j = 0; j < fieldSize; j++) {
-                fieldComponent[i][j] = new JLabel("" + field[i][j]);
-                add(fieldComponent[i][j]);
+                fieldJLabel[i][j] = new JLabel("" + field[i][j]);
+                fieldComponent[i][j] = add(fieldJLabel[i][j]);
             }
         }
         printField();
@@ -75,7 +114,7 @@ public class GameMap extends JFrame {
     void printField() {
         for (int i = 0; i < fieldSize; i++) {
             for (int j = 0; j < fieldSize; j++) {
-                fieldComponent[i][j].setText("" + field[i][j]);
+                fieldJLabel[i][j].setText("" + field[i][j]);
             }
         }
     }
