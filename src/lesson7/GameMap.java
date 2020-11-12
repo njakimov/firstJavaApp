@@ -1,6 +1,7 @@
 package lesson7;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -101,7 +102,8 @@ public class GameMap extends JFrame {
         setLayout(new GridLayout(fieldSize, fieldSize));
         for (int i = 0; i < fieldSize; i++) {
             for (int j = 0; j < fieldSize; j++) {
-                fieldJLabel[i][j] = new JLabel("" + field[i][j]);
+                fieldJLabel[i][j] = new JLabel("" + field[i][j], SwingConstants.CENTER);
+                fieldJLabel[i][j].setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
                 fieldComponent[i][j] = add(fieldJLabel[i][j]);
             }
         }
@@ -117,5 +119,16 @@ public class GameMap extends JFrame {
                 fieldJLabel[i][j].setText("" + field[i][j]);
             }
         }
+    }
+
+    //    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponents(g);
+        render(g);
+        System.out.println("перерисовка");
+    }
+
+    private void render(Graphics g) {
+
     }
 }
