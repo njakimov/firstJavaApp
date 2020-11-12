@@ -107,6 +107,7 @@ public class GameMap extends JFrame {
         for (int i = 0; i < fieldSize; i++) {
             for (int j = 0; j < fieldSize; j++) {
                 fieldJLabel[i][j] = new JLabel("" + field[i][j], SwingConstants.CENTER);
+                fieldJLabel[i][j].setFont(new Font("Serif", Font.PLAIN, 20));
                 fieldJLabel[i][j].setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
                 fieldComponent[i][j] = add(fieldJLabel[i][j]);
                 fieldJLabel[i][j].addMouseListener(new MyMouseListener(i, j));
