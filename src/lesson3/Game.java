@@ -18,7 +18,7 @@ public class Game {
     public static final Scanner USERINPUT = new Scanner(System.in);                                                     // интерфейс ввода от пользователя
     public static final Random PCINPUT = new Random();                                                                  // генерация случайных чисел - иммитация ввода ПК
 
-    public static int seriesGame = 3;                                                                                   // серия игры (три подряд по умолчанию)
+    public static int winLength = 3;                                                                                    // серия игры (три подряд по умолчанию)
     public static int fieldSize = 0;                                                                                    // размер поля
     public static char[][] field;                                                                                       // само поле
 
@@ -87,7 +87,7 @@ public class Game {
             if (fieldSize == 3) {
                 break;
             } else if (fieldSize > 3) {
-                seriesGame = 4;                                                                                         // если размер поля больше 3 в ряд, то делаем серию игры равную 4
+                winLength = 4;                                                                                         // если размер поля больше 3 в ряд, то делаем серию игры равную 4
                 break;
             } else {
                 System.out.println("Размер игрового поля должен быть больше 3. Повторите ввод: ");
@@ -162,7 +162,7 @@ public class Game {
             for (int j = 0; j < fieldSize; j++) {
                 if (field[i][j] == typeDot) {
                     countRow++;
-                    if (countRow == seriesGame) {
+                    if (countRow == winLength) {
                         return true;
                     }
                 } else {
@@ -171,7 +171,7 @@ public class Game {
 
                 if (field[j][i] == typeDot) {
                     countColumn++;
-                    if (countColumn == seriesGame) {
+                    if (countColumn == winLength) {
                         return true;
                     }
                 } else {
@@ -204,7 +204,7 @@ public class Game {
         for (int i = 0; i < fieldSize - startX; i++) {
             if (field[i][i + startX] == typeDot) {
                 countDiagonalPositiveRow++;
-                if (countDiagonalPositiveRow == seriesGame) {
+                if (countDiagonalPositiveRow == winLength) {
                     return true;
                 }
             } else {
@@ -213,7 +213,7 @@ public class Game {
 
             if (field[i + startX][i] == typeDot) {
                 countDiagonalPositiveColumn++;
-                if (countDiagonalPositiveColumn == seriesGame) {
+                if (countDiagonalPositiveColumn == winLength) {
                     return true;
                 }
             } else {
@@ -222,7 +222,7 @@ public class Game {
 
             if ((fieldSize - startX - i - 1) > 0 && field[i][fieldSize - 1 - startX - i] == typeDot) {
                 countDiagonalNegativeRow++;
-                if (countDiagonalNegativeRow == seriesGame) {
+                if (countDiagonalNegativeRow == winLength) {
                     return true;
                 }
             } else {
@@ -231,7 +231,7 @@ public class Game {
 
             if ((fieldSize - startX - i - 1) > 0 && field[fieldSize - 1 - startX - i][i] == typeDot) {
                 countDiagonalNegativeColumn++;
-                if (countDiagonalNegativeColumn == seriesGame) {
+                if (countDiagonalNegativeColumn == winLength) {
                     return true;
                 }
             } else {
