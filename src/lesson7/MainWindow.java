@@ -11,6 +11,7 @@ public class MainWindow extends JFrame {
     private static final int WINDOW_HEIGHT = 555;
     private static final int WINDOW_POSX = 650;
     private static final int WINDOW_POSY = 270;
+    private static JLabel lbFieldWin;
 
     private Settings settingWindow;
     private GameMap gameMap;
@@ -25,6 +26,12 @@ public class MainWindow extends JFrame {
         JButton btnSetting = new JButton("Настройки");                  // создаем кнопку настройку
 
         // делаем панельку
+        JPanel pnlCenter = new JPanel();
+        pnlCenter.setLayout(new GridLayout(1, 1));
+        lbFieldWin = new JLabel("Начни игру!", SwingConstants.CENTER);
+        add(pnlCenter, BorderLayout.CENTER);
+        pnlCenter.add(lbFieldWin);
+        // делаем панельку снизу
         JPanel pnlBottom = new JPanel();
         // в нее кладем в сетку 1 на 2
         pnlBottom.setLayout(new GridLayout(2, 2));
@@ -70,6 +77,10 @@ public class MainWindow extends JFrame {
         setTitle("Крестики нолики");                                        // заголовок модалки
         setVisible(true);                                                   // показать модалку после выполнения всех методов
 
+    }
+
+    public void setLbFieldWin(String textWin) {
+        lbFieldWin.setText(textWin);
     }
 
     void startNewGame(int mode, int fieldSize, int winLength) {
