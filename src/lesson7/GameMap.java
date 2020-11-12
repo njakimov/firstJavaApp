@@ -17,22 +17,22 @@ public class GameMap extends JFrame {
     private static final char HUMAN_DOT = 'X';
     private static final char PC_DOT = 'O';
     private static final char EMPTY_DOT = '_';
-    public static final Random PCINPUT = new Random();
+    public static final Random PCINPUT = new Random();                                                                  // генератор хода PC
 
-    private MainWindow mainWindow;
+    private MainWindow mainWindow;                                                                                      // главное окно
     private char[][] field;                                                                                             // само поле
     private JLabel[][] fieldJLabel;                                                                                     // массив лейблов
     private Component[][] fieldComponent;                                                                               // массив компонентов
     private int fieldSize;                                                                                              // размер поля
     private int winLength;                                                                                              // длина победы (количество в ряд)
-    private int mode;                                                                                              // длина победы (количество в ряд)
-    private char currentDot;                                                                                              // длина победы (количество в ряд)
-    private int currentUser = 1;                                                                                              // длина победы (количество в ряд)
+    private int mode;                                                                                                   // режим игры
+    private char currentDot;                                                                                            // текущий курсор (точка/крестик)
+    private int currentUser = 1;                                                                                        // текущий игрок                                                                                        // длина победы (количество в ряд)
 
     GameMap(MainWindow mainWindow) {
         this.mainWindow = mainWindow;
-        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);               // сразу дефолтно размеры
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);         // делаем закрытие только этого окна
+        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);                                                                           // сразу дефолтно размеры
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);                                                                     // делаем закрытие только этого окна
         Rectangle gameWindowBounds = mainWindow.getBounds();
         int posX = (int) gameWindowBounds.getCenterX() - WINDOW_WIDTH / 2;
         int posY = (int) gameWindowBounds.getCenterY() - WINDOW_HEIGHT / 2;
@@ -41,7 +41,6 @@ public class GameMap extends JFrame {
         setTitle("Игровое окно");
         setBackground(Color.BLACK);
         addWindowListener(new WindowListener() {
-
             public void windowActivated(WindowEvent event) {
 
             }
@@ -73,7 +72,6 @@ public class GameMap extends JFrame {
             public void windowOpened(WindowEvent event) {
 
             }
-
         });
     }
 
@@ -90,7 +88,6 @@ public class GameMap extends JFrame {
                 "\n fieldSize = " + fieldSize +
                 "\n winLength = " + winLength
         );
-        repaint();
     }
 
     /**
@@ -207,17 +204,6 @@ public class GameMap extends JFrame {
                 fieldJLabel[i][j].setText("" + field[i][j]);
             }
         }
-    }
-
-    /**
-     * Метод проверяет данные на корректность
-     *
-     * @param userX
-     * @param userY
-     * @return
-     */
-    public boolean isValidCell(int userX, int userY) {
-        return userX >= 0 && userX < fieldSize && userY >= 0 && userY < fieldSize;
     }
 
     /**
@@ -352,16 +338,4 @@ public class GameMap extends JFrame {
         }
         return true;
     }
-
-//    @Override
-//    protected void paintComponent(Graphics g) {
-//        super.paintComponents(g);
-//        render(g);
-//        System.out.println("перерисовка");
-//    }
-//
-//    private void render(Graphics g) {
-//        int width = getWidth();
-//        int height = getHeight();
-//    }
 }
